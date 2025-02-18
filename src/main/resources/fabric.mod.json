@@ -3,7 +3,7 @@
 	"id": "uglypipes",
 	"version": "${version}",
 	"name": "UglyPipes",
-	"description": "This mod adds ugly but functional pipes.",
+	"description": "This mod adds ugly but functional pipes. (And yes, the pipes are well oiled.)",
 	"authors": [
 		"stormtrooper28"
 	],
@@ -16,13 +16,13 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"com.stormtrooper28.ugly_pipes.UglyPipes"
+			"com.stormtrooper28.uglypipes.UglyPipes"
 		],
 		"fabric-datagen": [
-			"com.stormtrooper28.ugly_pipes.UglyPipesDataGenerator"
+			"com.stormtrooper28.uglypipes.UglyPipesDataGenerator"
 		],
 		"client": [
-			"com.stormtrooper28.ugly_pipes.UglyPipesClient"
+			"com.stormtrooper28.uglypipes.UglyPipesClient"
 		]
 	},
 	"mixins": [

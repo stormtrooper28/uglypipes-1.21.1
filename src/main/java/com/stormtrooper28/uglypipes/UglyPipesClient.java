@@ -1,4 +1,4 @@
-package com.stormtrooper28.ugly_pipes;
+package com.stormtrooper28.uglypipes;
 
 import net.fabricmc.api.ClientModInitializer;
 

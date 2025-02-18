@@ -1,4 +1,4 @@
-package com.stormtrooper28.ugly_pipes.mixin;
+package com.stormtrooper28.uglypipes.mixin;
 
 import net.minecraft.server.MinecraftServer;
 import org.spongepowered.asm.mixin.Mixin;

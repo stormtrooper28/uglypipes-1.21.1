@@ -1,0 +1,12 @@
+{
+  "item_group.ugly_pipes.all": "Ugly Pipes & Stuff",
+
+  "block.uglypipes.item_pipe": "Ugly Item Pipe",
+  "tooltip.uglypipes.ugly_item_block_shift_msg": "Press §9§l[SHIFT]§r for more information",
+
+  "item.uglypipes.ugly_wrench": "Ugly Wrench",
+  "tooltip.uglypipes.ugly_wrench_0": "Right Click with wrench to switch pull/push",
+  "tooltip.uglypipes.ugly_wrench_1": "Shift Right Click to toggle a connection",
+  "tooltip.uglypipes.ugly_wrench_2": "Left Click to break pipe/machine",
+  "tooltip.uglypipes.ugly_wrench_3": "Shift Left Click to empty machine & reset pipe/whatever"
+}

@@ -1,0 +1,127 @@
+source/destination: strictly entry / exit points for network (does not gurantee attached inventory)
+i/o: source/destination with attached inventory
+push/pull: implies movement of items
+Only source and destination pipes have Block Entities --- pipes do not
+
+#### Step -1:
+    - Rewrite with nomenclature for source/destination vs i/o vs push/pull in mind
+
+#### Step 0: Make classes / methods / comments to blueprint the following steps in detail
+    !!!! Remember, You're building the blueprints, not the code!!!!
+    - Step 1:
+        - Requires looking into ConnectingBlock/ChorusPlantBlock classes
+        - Probably combine Steps 1 and 1.5
+        - Add folder depth ~ blocks -> pipe -> item_pipe
+    - Step 2:
+        - Build placeholder source & destination models
+        - Add UglyItemPipeSourceBlock and UglyItemPipeDestinationBlock // some abstract class that extends BlockEntity?
+        - Look into inventories / blockEntity
+    - Step 3:
+        - What does resetting a pipe/network/machine look like?
+        - check if rotatable, decide on which direction to rotate (all 6 or only 4 faces?)
+    - Step 4:
+        - Probably a generic network class (list of sources, list of destinations)
+        - Add a field so that every source/destination block can see which pipe network they're in
+        - Make a digital/physical map of
+    - Step 5:
+        - Look into schedules / timers
+
+#### Step 1: Make Pipes Connect
+    Pipe Models (look at Connecting Block/ChorusPlantBlock)
+        Connection Count:
+            0:
+                Armless Redstone
+            1:
+                Only touching 1 inventory
+            2:
+                straight
+                elbow
+            3:
+                T
+            4:
+                + - crossroad
+                T with extra arm
+            5:
+                Missing 1
+            6:
+                All directions
+
+#### Step 1.5: Abstract Pipe Connections
+    - Make generic Pipe/machine class (that is a clone of ConnectingBlock?)
+
+#### Step 2: Add Source and Destination Pipes
+    - Make a "stem" which is connected to inventories? / auto-change to destination pipe?
+    - Allow sources and destinations to identify if they are connected to a block with an inventory
+
+#### Step 3: Add Click/Wrench Functionality
+    - Right Click with wrench to switch source/destination
+    - Shift Right Click to switch whether a side is connecting to an inventory
+    + Left Click to break pipe/machine
+    - Shift Left Click to empty machine & reset pipe network/whatever (without breaking)
+    - Rotate rotatable blocks
+        - AbstractBlockState#rotate ?
+
+#### Step 4: Build Network
+    - Have a static list of all networks
+    - Link sources and destinations in a pipe network (list of sources, list of destinations)
+    - Allow sources/destinations to be added / removed
+        - Allow them to check if their inventory has been added / removed
+    - Monitor edge cases and adapt
+        - inventory added/removed without changing block
+        - AbstractBlock#getStateForNeighborUpdate, NOTIFY_NEIGHBORS,NOTIFY_LISTENERS
+        - On pipe/i/o break/place, update network
+    - Every 200 or so ticks: Network Integrity Test
+        - hard check a pipe network for changes (each source/destination should have some internal value pointing to their target inventory)
+        - iterate so you dont do more than one network every tick or so, then (once all networks have been scanned) restart this loop
+            - maybe a while(pipeNetwork exists) with a Sleep timer between cycles?
+
+#### Step 5: Move Items
+    - net.minecraft.block.HopperBlock / net.minecraft.block.entity.HopperBlockEntity
+    - Build a timer every 20 ticks or so
+    - Allow a source to check each item in connected inventory to see if there is a destination that can accept it
+    - Build a list in the destination block of where it will send to, loop through (adjusting for when something is added / removed)
+    - Pull/push a stack at a time
+
+#### Step 6: Polish Text
+    - confirm comments and translatables
+
+#### Step 7: Version 1
+    - Decide if want to release now or later
+
+
+
+
+@@@plans
+####################################################
+####    The following may or may not be added   ####
+####################################################
+
+Guide book
+
+Smart Insert/Recipe Inserter: Insert items in slots according to recipes
+Balancing/upgrade or tiered system
+    Fluids (gases and liquids)/energy/redstone?
+Logistics System:
+    Filtering push/pull
+    Request
+    Teleport (short/long-distance)
+    Trash/voiding
+    Conditional Push/pull
+        (inventory is full) ? void liquid/item/energy : store in inventory
+    Redstone Priority (Auto-push/pull to highest redstone signal?)
+    Prioritize certain types of entities (like prefer machines to chests)
+    Player push/pull pipe
+        - Enderic one (like the player inventory block thingy in pneumaticCraft)
+Machines?
+    (Like auto-crafting)
+    World Interaction:
+        Crop management
+        Fluid Collection/spilling
+        Block breaking/placing
+        Item using/attacking
+        Item pick up/drop
+    Redstone logic?
+        Custom GUI
+Full visualization of connected inventories (allow modifying with logistics system)
+Give items more fun names: hard to look at wrench, abhorrent/Cthulhuesque/abberant/abyssal/eldritch pipe, etc
+Decorations? Chimney stack?
